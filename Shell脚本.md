@@ -59,3 +59,72 @@ script name: -bash
 
 ### $?
 - 类似于命令执行的返回值，正常返回0
+
+
+# 运算符
+- 基本语法
+  - $((运算式)) 或 $[运算式]
+
+- 案例：计算  (4+3) x 2 的值并复制给 sum
+```bash
+[root@VM-4-16-centos ~]# sum=$[(4+3)*2]
+[root@VM-4-16-centos ~]# echo $sum
+14
+```
+
+# 条件判断
+- 基本语法
+  - test condition
+  - [ condition ]  （注意condition前后要有空格，中间的表达式也要空格）
+  - 注意：条件非空即为true，[ kindred ]返回true，[]返回false
+
+- 常用判断条件
+  - 两个整数间比较
+    - -eq 等于 （equal）
+    - -ne 不等于 （not equal）
+    - -lt 小于 （less than）
+    - -le 小于等于 （less equal）
+    - -gt 大于 （greater than）
+    - -ge 大于等于 （greater equal）
+
+  - 按照文件权限进行判断
+    - -r 有读的权限 （read）
+    - -w 有写的权限 （write）
+    - -x 有执行的权限 （execute）
+
+  - 按照文件的类型进行判断
+    - -e 文件存在 （existence）
+    - -f 文件存在并且是一个常规文件 （file）
+    - -d 文件存在并且是一个目录 （directory）
+
+- 多条件判断 （&&表示前一条命令执行成功时，才执行下一条命令，||表示上一条命令执行失败后，才执行下一条命令）
+  - [ kindred ] && echo OK || echo notOK
+```bash
+[root@VM-4-16-centos scripts]# [ $a -gt 100 ] && echo "$a > 100" || echo "$a < 100"
+50 < 100
+```
+
+
+
+
+```bash
+[root@VM-4-16-centos scripts]# test $a = kindred
+[root@VM-4-16-centos scripts]# [ $a = kindred ]
+[root@VM-4-16-centos scripts]# echo $?
+0
+[root@VM-4-16-centos scripts]# [ -x test ]
+[root@VM-4-16-centos scripts]# echo $?
+1
+[root@VM-4-16-centos scripts]# [ -x add.sh ]
+[root@VM-4-16-centos scripts]# echo $?
+0
+[root@VM-4-16-centos scripts]# [ -e add.sh ]
+[root@VM-4-16-centos scripts]# echo $?
+0
+[root@VM-4-16-centos scripts]# [ -f add.sh ]
+[root@VM-4-16-centos scripts]# echo $?
+0
+[root@VM-4-16-centos scripts]# [ -d add.sh ]
+[root@VM-4-16-centos scripts]# echo $?
+1
+```
