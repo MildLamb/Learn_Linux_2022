@@ -33,5 +33,29 @@ echo "hello,world"
 
 - 实际操作案例
 ```bash
+# 编写脚本 paramater.sh
+[root@VM-4-16-centos scripts]# cat parameter.sh 
+echo '===========$n==========='
+echo script name: $0
+echo 1st paramater: $1
+echo 2nd paramater: $2
+echo 3th paramater: $3
 
+# 执行脚本并添加参数
+[root@VM-4-16-centos scripts]# . parameter.sh Kindred Gnar Neeko
+===========$n===========
+script name: -bash
+1st paramater: Kindred
+2nd paramater: Gnar
+3th paramater: Neeko
 ```
+
+### $#
+- $# : 获取所有输入参数个数
+
+### $*和$@
+- $* : 代表命令行中所有的参数，$*会把所有参数看作一个整体
+- $@ : 代表命令行中所有的参数，但$@更类似于数组，可以遍历其中的参数
+
+### $?
+- 类似于命令执行的返回值，正常返回0
