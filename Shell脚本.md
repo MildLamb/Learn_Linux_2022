@@ -188,3 +188,13 @@ exit
 [root@VM-4-16-centos scripts]# crontab -e
 0 2 * * * /usr/scripts/daily_archive.sh /usr/scripts
 ```
+
+
+# 实操案例，发送消息
+利用Linux自带的mesg和write工具，向其他用户发送消息  
+需求：实现一个向某用户快速发送消息的脚本，输入用户名作为第一个参数，后面直接  
+跟要发送的消息。脚本需要检测用户是否登录在系统中，是否开启消息功能，以及当前  
+消息是否为空
+
+- 实现
+
