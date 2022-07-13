@@ -196,5 +196,60 @@ exit
 跟要发送的消息。脚本需要检测用户是否登录在系统中，是否开启消息功能，以及当前  
 消息是否为空
 
-- 实现
+## 代码实现
+```bash
+#!/bin/bash
+
+# 查看用户是否登录
+login_user=$(who | grep -i -m 1 $1 | awk '{print $1}')
+
+if [ -z $login_user ]
+then 
+	echo "$1 不在线"
+	echo "脚本退出"
+	exit
+fi
+
+
+# 查看用户是否开启消息功能
+is_allow=$(who -T | grep -i -m 1 $1 | awk '{print $2}')
+
+if [ $is_allow != "+" ]
+then
+	echo "$1 未开启消息功能"
+	echo "脚本退出"
+	exit
+fi
+
+# 查看消息是否为空
+if [ -z $2 ]
+then
+	echo "没有消息发送"
+	echo "脚本退出"
+	exit
+fi
+
+
+# 发送消息
+# 从参数中获取消息
+whole_msg=$(echo $* | cut -d " " -f 2-)
+
+# 获取用户登录的终端
+user_terminal=$(who | grep -i -m 1 $1 | awk '{print $2}')
+
+# 写入要发送的消息
+echo $whole_msg | write $login_user $user_terminal
+
+if [ $? != 0 ]
+then
+	echo "发送失败!"
+else
+	echo "发送成功"
+fi
+exit
+```
+```bash
+[root@VM-4-16-centos scripts]# ./send_msg.sh mildlamb Mildlamb and Wildwolf
+发送成功
+```
 
